@@ -1,0 +1,125 @@
+.search-container label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 0.75rem 1.5rem;
+  background-color: #f1f3f5;
+  border: 1px solid #f1f3f5;
+  border-radius: 50rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4dabf7;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.0125), 0 0 8px rgba(34, 139, 230, 0.5);
+}
+
+.search-container .fa-search {
+  position: absolute;
+  right: 10px;
+}
+
+.game-filter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+}
+
+.game-filter-nav .filter-link {
+  padding: 0 1rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  letter-spacing: 1.63px;
+  font-weight: 700;
+}
+
+.game-filter-nav .filter-link:hover {
+  cursor: pointer;
+}
+
+.game-filter-nav .filter-link.active {
+  color: #495fef;
+}
+
+.game-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 3rem 1rem;
+  justify-content: start;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.game-card {
+  position: relative;
+  margin: 0 0.6rem 1.85rem;
+  max-width: 300px;
+  height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #32383e;
+  color: #e9ecef;
+  transition: all 0.4s ease-in-out;
+}
+
+.game-card:hover{
+  transform: scale(1.02);
+  box-shadow: 0 .9rem 1rem rgba(0,0,0,.199) !important;
+}
+
+.card-body .img-wrapper {
+  width: 100%;
+  min-width: 255px;
+  min-height: 138px;
+}
+
+.card-body img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.card-body .card-content {
+  padding: 1rem 2rem 2rem;
+}
+
+.card-content h3 {
+  font-size: 1.5rem;
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #a0aab1;
+}
+
+.card-info .fa-heart {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.card-info .fa-heart:hover {
+  transform: scale(1.3);
+}
+
+.card-info .badge {
+  display: inline-block;
+
+}
+
+.card-info .badge {
+  display: inline-block;
+  padding: 1px 6px;
+  margin-right: .5rem;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: baseline;
+  border-radius: .25rem;
+  background-color: #9099a0;
+  color: #272b30;
+}

@@ -6,10 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>API Project</title>
 
+  <link rel="stylesheet" href="./css/base.css">
   <link rel="stylesheet" href="./css/styles.css">
+
+  <script src="https://kit.fontawesome.com/1276d6d989.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+  <main class="container">
+
+    <section class="games-selection">
+      <div class="container search-container">
+        <label for="search">
+          <input autocomplete="off" id="search" type="text" class="search-input" placeholder="Search...">
+          <i class="fas fa-search"></i>
+        </label>
+        <ul class="game-filter-nav ul-defaults-none">
+          <li data-filter="all" class="filter-link active">All</li>
+          <li data-filter="alphabetical" class="filter-link">Alphabetical</li>
+          <li data-filter="release" class="filter-link">Release Date</li>
+          <li data-filter="favorite" class="filter-link">Favorite</li>
+        </ul>
+      </div>
+      <div id="data" class="game-grid"></div>
+    </section>
+  </main>
   
+
   <script src="./js/index.js"></script>
 </body>
 </html>
