@@ -1,3 +1,12 @@
+body {
+  background-color: #272b30;
+  color: #e9ecef;
+}
+
+.games-selection {
+  margin: 3rem auto;
+}
+
 .search-container label {
   position: relative;
   display: inline-flex;
@@ -6,9 +15,10 @@
 
 .search-input {
   padding: 0.75rem 1.5rem;
-  background-color: #f1f3f5;
-  border: 1px solid #f1f3f5;
+  background-color: #32383e;
+  border: 1px solid #32383e;
   border-radius: 50rem;
+  color: #e9ecef;
 }
 
 .search-input:focus {
@@ -34,6 +44,7 @@
   line-height: 1.6;
   letter-spacing: 1.63px;
   font-weight: 700;
+  color: #e9ecef;
 }
 
 .game-filter-nav .filter-link:hover {
@@ -41,14 +52,14 @@
 }
 
 .game-filter-nav .filter-link.active {
-  color: #495fef;
+  text-decoration: underline;
 }
 
 .game-grid {
   display: flex;
   flex-wrap: wrap;
   padding: 3rem 1rem;
-  justify-content: start;
+  justify-content: center;
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
