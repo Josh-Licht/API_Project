@@ -38,32 +38,37 @@ for (const link of filterLink) {
     setActive(link, '.filter-link');
     const filter = this.dataset.filter;
     if (filter === "all") {
-      displayData(gamesData);
+      return displayData(gamesData);
     } else if (filter === "favorite") {
       return displayData(favorite);
     }
-    displayData(sortData(gamesData, filter));
+    return  displayData(sortData(gamesData, filter));
   });
 }
 
 //* Search Filtering
+
 searchBox.addEventListener('keyup', (e) => {
   const searchInput = e.target.value.toLowerCase().trim();
   const filter = document.querySelectorAll('.filter-link');
-  sortOrder = true
+  sortOrder = true;
   
+  if(searchInput === ""){
+    return displayData(gamesData);
+  }
   filter.forEach(link => {
     const filterValue = link.dataset.filter;
-    if(filterValue.includes(searchInput)){
-      if (filterValue.includes(searchInput) === 'all') {
-        return displayData(gamesData);
-      } else if (filterValue.includes('favorite')) {
-        return displayData(favorite);
-      }
-      displayData(sortData(gamesData, filterValue));
-    }
+
+    if (filterValue.includes(searchInput) && searchInput.length >= 3) {
+      return displayData(sortData(gamesData, filterValue));
+    } 
   });
-})
+});
+
+
+
+
+
 
 function sortData(data, sortBy) {
   let sortedData = data.slice();
@@ -104,9 +109,9 @@ function toggleFavorite(e) {
   let index = favorite.findIndex(obj => obj.title === gameData.title);
 
   if(index >= 0) {
-      favorite.splice(index, 1)
+    favorite.splice(index, 1)
   } else {
-      favorite.push(gameData);
+    favorite.push(gameData);
   }
 }
 
