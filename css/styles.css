@@ -7,6 +7,10 @@ body {
   margin: 3rem auto;
 }
 
+.search-container {
+  position: relative;
+}
+
 .search-container label {
   position: relative;
   display: inline-flex;
@@ -55,10 +59,99 @@ body {
   text-decoration: underline;
 }
 
+/** display number */
+.display-options {
+  padding: 12px;
+}
+
+.select-box {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+.select-box .options-container {
+  background-color: #32383e;
+  color: #e9ecef;
+  max-height: 0; 
+  width: 100%;
+  opacity: 0;
+  transition: all 0.4s;
+  border-radius: 8px;
+  overflow: hidden;
+
+  order: 1;
+}
+
+.selected {
+  background-color: #2f3640;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: #e9ecef;
+  position: relative;
+  order: 0;
+}
+
+.selected::after {
+  content: "";
+  background: url("../assets/arrow-down.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  position: absolute;
+  height: 100%;
+  width: 32px;
+  right: 10px;
+  top: 8px;
+
+  transition: all 0.4s ease-in-out;
+}
+
+.select-box .options-container.active {
+  max-height: 240px;
+  opacity: 1;
+  overflow-y: scroll;
+}
+
+.select-box .options-container.active + .selected::after {
+  transform: rotateX(180deg);
+  top: -6px;
+}
+
+.select-box .options-container::-webkit-scrollbar{
+  width: 8px;
+  background: #0d141f;
+  border-radius: 0 8px 8px 0;
+}
+
+.select-box .options-container {
+  scrollbar-width: thin;
+  scrollbar-color: transparent #0d141f;
+  scrollbar-track-color: #0d141f;
+}
+
+.select-box .options-container::-webkit-scrollbar-thumb {
+  background: #0d141f;
+  border-radius: 0 8px 8px 0;
+}
+
+.select-box .option,
+.selected {
+  padding: 12px 24px;
+  cursor: pointer;
+}
+
+.select-box .option:hover { background: #414b57; }
+
+.select-box label { cursor: pointer; }
+
+.select-box .option .radio { display: none; }
+
+/** game tiles */
 .game-grid {
   display: flex;
   flex-wrap: wrap;
-  padding: 3rem 1rem;
+  padding: 1rem;
   justify-content: center;
   max-width: 1400px;
   width: 100%;

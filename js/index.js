@@ -65,10 +65,24 @@ searchBox.addEventListener('keyup', (e) => {
   });
 });
 
+//* dropdown selection
 
+const selected = document.querySelector('.selected');
+const optionContainer = document.querySelector('.options-container');
+const optionList = document.querySelectorAll('.option');
 
+selected.addEventListener('click', () => {
+  // toggle active on/off
+  optionContainer.classList.toggle("active");
+})
 
-
+optionList.forEach((option) => {
+  option.addEventListener('click', () => {
+    selected.innerHTML = option.querySelector("label").innerHTML;
+    optionContainer.classList.remove("active")
+    console.log(option.querySelector("label").innerHTML);
+  })
+})
 
 function sortData(data, sortBy) {
   let sortedData = data.slice();
