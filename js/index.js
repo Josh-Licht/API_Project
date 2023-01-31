@@ -81,9 +81,6 @@ searchBox.addEventListener('keyup', (e) => {
 });
 
 //* dropdown selection
-
-//* dropdown selection
-
 selected.addEventListener('click', () => {
   // toggle active on/off
   optionContainer.classList.toggle("active");
@@ -103,21 +100,17 @@ optionList.forEach((option) => {
 function sortData(data, sortBy) {
   let sortedData = data.slice();
   
-  if (sortBy === "alphabetical") {
+  if (sortBy === "alphabetical" || sortBy === "release") {
     sortedData.sort((a, b) => {
+      const params = sortBy === "alphabetical"
+      ? [a.title.localeCompare(b.title), b.title.localeCompare(a.title)]
+      : [new Date(a.release_date) - new Date(b.release_date), new Date(b.release_date) - new Date(a.release_date)]
       return sortOrder
-        ? a.title.localeCompare(b.title)
-        : b.title.localeCompare(a.title);
+        ? params[0]
+        : params[1];
     });
     sortOrder = !sortOrder;
-  } else if (sortBy === "release") {
-    sortedData.sort((a, b) => {
-      return sortOrder
-        ? new Date(a.release_date) - new Date(b.release_date)
-        : new Date(b.release_date) - new Date(a.release_date);
-    });
-    sortOrder = !sortOrder;
-  }else if (sortBy === "favorite") {
+  } else if (sortBy === "favorite") {
     return displayData(favorite)
   }
   return sortedData;
@@ -128,7 +121,7 @@ function toggleFavorite(e) {
   const target = e.target;
   const card = target.parentNode.parentNode.parentNode;
 
-  let gameData = {
+  let cardData = {
     thumbnail: card.querySelector('img').src,
     title: card.querySelector('.header').innerText,
     short_description: card.querySelector('.text-overflow').innerText,
@@ -137,13 +130,10 @@ function toggleFavorite(e) {
 
   target.classList.toggle('fas');
   target.classList.toggle('far');
-  let index = favorite.findIndex(obj => obj.title === gameData.title);
+  let index = favorite.findIndex(obj => obj.title === cardData.title);
 
-  if(index >= 0) {
-    favorite.splice(index, 1)
-  } else {
-    favorite.push(gameData);
-  }
+  index >= 0 ? favorite.splice(index, 1) : favorite.push(cardData);
+
 }
 
 //* create the game cards
