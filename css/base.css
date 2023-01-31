@@ -52,3 +52,15 @@ button{ outline: none; }
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.header-lg {
+  font-size: 5rem;
+  letter-spacing: -2.5px;
+  line-height: 1.05;
+}
+
+.sub-header {
+  font-size: 1.3125rem;
+  line-height: 1.5;
+  padding-top: 1.25rem;
+}

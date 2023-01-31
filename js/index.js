@@ -10,20 +10,33 @@ const options = {
 };
 
 let sortOrder = true; // true for ascending, false for descending
+let displayQty;
+
 const active = 'active';
 const dataFilter = '[data-filter]';
+
+//* filtering variables
 const filterLink = document.querySelectorAll(dataFilter);
 const searchBox = document.querySelector('#search');
 const gameItems = document.querySelectorAll(dataFilter);
 
+//* dropdown variables
+const selected = document.querySelector('.selected');
+const optionContainer = document.querySelector('.options-container');
+const optionList = document.querySelectorAll('.option');
+
 fetch(api, options)
   .then(response => response.json())
   .then(data => {
-    
+    if (!data) throw new Error("No data received from API");
+
     gamesData = data;
     displayData(data);
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.log(err);
+    console.log("Displaying error message to the user");
+  });
 
 //* set elements as active
 const setActive = (elm, selector) => {
@@ -31,7 +44,9 @@ const setActive = (elm, selector) => {
     document.querySelector(`${selector}.${active}`).classList.remove(active);
   } 
   elm.classList.add(active)
-}
+}  
+
+//* filter via nav options
 
 for (const link of filterLink) {
   link.addEventListener('click', function() {
@@ -46,7 +61,7 @@ for (const link of filterLink) {
   });
 }
 
-//* Search Filtering
+//* filter via search bar
 
 searchBox.addEventListener('keyup', (e) => {
   const searchInput = e.target.value.toLowerCase().trim();
@@ -67,9 +82,7 @@ searchBox.addEventListener('keyup', (e) => {
 
 //* dropdown selection
 
-const selected = document.querySelector('.selected');
-const optionContainer = document.querySelector('.options-container');
-const optionList = document.querySelectorAll('.option');
+//* dropdown selection
 
 selected.addEventListener('click', () => {
   // toggle active on/off
@@ -80,9 +93,12 @@ optionList.forEach((option) => {
   option.addEventListener('click', () => {
     selected.innerHTML = option.querySelector("label").innerHTML;
     optionContainer.classList.remove("active")
-    console.log(option.querySelector("label").innerHTML);
+    displayQty = option.querySelector("label").innerHTML
+    displayData(gamesData);
   })
 })
+
+//* sort data from input
 
 function sortData(data, sortBy) {
   let sortedData = data.slice();
@@ -107,6 +123,7 @@ function sortData(data, sortBy) {
   return sortedData;
 }
 
+//* toggle favorite icon and add/remove from array
 function toggleFavorite(e) {
   const target = e.target;
   const card = target.parentNode.parentNode.parentNode;
@@ -129,39 +146,42 @@ function toggleFavorite(e) {
   }
 }
 
-function displayData(data) {
-  let output = '';
-  
-  for (let i = 0; i < data.length; i++) {
-    let myFav = "far";
-    if(favorite.findIndex(fav => fav.title === data[i].title) >= 0) {
-      myFav = "fas";
-    }
-    output += `
-      <div class="game-card">
-        <div class="card-body">
-          <div class="img-wrapper">
-            <img src="${data[i].thumbnail}" alt="thumbnail">
-          </div>
-          <div class="card-content">
-            <h3 class="header text-overflow">${data[i].title}</h3>
-            <p class="text-overflow">${data[i].short_description}</p>
-            <div class="card-info">
-              <i class="${myFav} fa-heart"></i>
-              <div>
-                <span class="badge">${data[i].genre}</span>
-                <i class="fab fa-windows"></i>
-              </div>
+//* create the game cards
+function createCard(data) {
+  if (!data) return '';
+  const myFav = favorite.findIndex(fav => fav.title === data.title) >= 0 ? "fas" : "far";
+  return `
+    <div class="game-card">
+      <div class="card-body">
+        <div class="img-wrapper">
+          <img src="${data.thumbnail}" alt="thumbnail">
+        </div>
+        <div class="card-content">
+          <h3 class="header text-overflow">${data.title}</h3>
+          <p class="text-overflow">${data.short_description}</p>
+          <div class="card-info">
+            <i class="${myFav} fa-heart"></i>
+            <div>
+              <span class="badge">${data.genre}</span>
+              <i class="fab fa-windows"></i>
             </div>
           </div>
         </div>
       </div>
-    `;
+    </div>
+  `;
+}
+
+//* display the api array via original data/ filtered data
+function displayData(data) {
+  let output = '';
+  
+  for (let i = 0; i < (displayQty ||= 30); i++) {
+    output += createCard(data[i]);
   }
   document.getElementById('data').innerHTML = output;
+  document.getElementById('info').innerHTML = `${data.length} games available in out games list!`;
 
   const toggleButtons = document.querySelectorAll('.fa-heart');
-  toggleButtons.forEach(button => {
-      button.addEventListener('click', toggleFavorite);
-  });
+  toggleButtons.forEach(button => button.addEventListener('click', toggleFavorite));
 }

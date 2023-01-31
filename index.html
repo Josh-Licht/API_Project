@@ -13,52 +13,78 @@
 </head>
 <body>
 
-  <main class="container">
+  <main>
 
-    <section class="games-selection">
-      <div class="container search-container">
-        <label for="search">
-          <input autocomplete="off" id="search" type="text" class="search-input" placeholder="Search...">
-          <i class="fas fa-search"></i>
-        </label>
-        <ul class="game-filter-nav ul-defaults-none">
-          <li data-filter="all" class="filter-link active">All</li>
-          <li data-filter="alphabetical" class="filter-link">Alphabetical</li>
-          <li data-filter="release" class="filter-link">Release Date</li>
-          <li data-filter="favorite" class="filter-link">Favorite</li>
-        </ul>
-        <div class="display-options">
-          <div class="select-box">
-
-            <div class="options-container">
-
-              <div class="option">
-                <input type="radio" class="radio" id="10">
-                <label for="10">10</label>
-              </div>
-
-              <div class="option">
-                <input type="radio" class="radio" id="20">
-                <label for="20">20</label>
-              </div>
-
-              <div class="option">
-                <input type="radio" class="radio" id="30">
-                <label for="30">30</label>
-              </div>
-
-            </div>
-
-            <div class="selected">
-              Select Video Category
-            </div>
+    <!-- Hero Section -->
+    <section class="hero-bg">
+      <div class="container">
+        <div class="hero-content">
+          <h2 class="header-lg">Top Free Games</h2>
+          <div class="sub-header">
+            Browse the Top games of 2023!
           </div>
+          <span id="info"></span>
         </div>
       </div>
-
-      <div id="data" class="game-grid"></div>
-
     </section>
+    
+    <div class="container">
+      <section class="games-selection">
+        <div class="container search-container">
+          <label for="search">
+            <input autocomplete="off" id="search" type="text" class="search-input" placeholder="Search...">
+            <i class="fas fa-search"></i>
+          </label>
+          <ul class="game-filter-nav ul-defaults-none">
+            <li data-filter="all" class="filter-link active">All</li>
+            <li data-filter="alphabetical" class="filter-link">Alphabetical</li>
+            <li data-filter="release" class="filter-link">Release Date</li>
+            <li data-filter="favorite" class="filter-link">Favorite</li>
+
+            <div class="display-options">
+              <div class="select-box">
+    
+                <div class="options-container">
+    
+                  <div class="option">
+                    <input type="radio" class="radio" id="10">
+                    <label for="10">10</label>
+                  </div>
+    
+                  <div class="option">
+                    <input type="radio" class="radio" id="20">
+                    <label for="20">20</label>
+                  </div>
+    
+                  <div class="option">
+                    <input type="radio" class="radio" id="30">
+                    <label for="30">30</label>
+                  </div>
+    
+                  <div class="option">
+                    <input type="radio" class="radio" id="40">
+                    <label for="40">40</label>
+                  </div>
+    
+                  <div class="option">
+                    <input type="radio" class="radio" id="50">
+                    <label for="50">50</label>
+                  </div>
+    
+                </div>
+    
+                <div class="selected">
+                  Show Quantity
+                </div>
+              </div>
+            </div>
+          </ul>
+        </div>
+
+        <div id="data" class="game-grid"></div>
+
+      </section>
+    </div>
   </main>
   
 
