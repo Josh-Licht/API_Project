@@ -91,7 +91,6 @@ searchBox.addEventListener('keyup', (e) => {
 });
 
 //* dropdown selection
-
 selected.addEventListener('click', () => {
   // toggle active on/off
   optionContainer.classList.toggle("active");
@@ -110,6 +109,7 @@ optionList.forEach((option) => {
 
 function sortData(data, sortBy) {
   let sortedData = data.slice();
+  
   if (sortBy === "alphabetical" || sortBy === "release") {
     sortedData.sort((a, b) => {
       const params = sortBy === "alphabetical"
@@ -119,6 +119,7 @@ function sortData(data, sortBy) {
         ? params[0]
         : params[1];
     });
+    sortOrder = !sortOrder;
   } else if (sortBy === "favorite") {
     return displayData(favorite)
   }
@@ -155,9 +156,12 @@ function toggleFavorite(e) {
   }
 
   // Call displayData with either gamesData or favorite, depending on the state of the item
-  index === -1 
-  ? [filter === "undefined" ? displayData(gamesData) : displayData(sortData(gamesData, filter))] 
-  : displayData(favorite);
+  if (index === -1 ) {
+    filter === "undefined" ? displayData(gamesData) : displayData(sortData(gamesData, filter))
+  } else {
+    displayData(favorite)
+  }
+
 }
 
 //* create the game cards
@@ -186,35 +190,15 @@ function createCard(data) {
   `;
 }
 
-//* genre Counter
-function countGenres(data, id) {
-  let count = 0;
-  const elm = (id) => {
-    document.getElementById(id).querySelector('span').textContent = count;
-    count++;
-  }
-  for (let i = 0; i < (displayQty ||= 30); i++) {
-    if (data[i].genre === id) { elm(id) }
-    if (data[i].genre === "ARPG") { elm("Action RPG") }
-    if (data[i].genre === "MMORAPG") { elm("MMORPG") }
-  }
-}
-
 //* display the api array via original data/ filtered data
 function displayData(data) {
   let output = '';
   
   for (let i = 0; i < (displayQty ||= 30); i++) {
     output += createCard(data[i]);
-    
-    for (const legendItem of legendItems) {
-      const id = legendItem.getAttribute('id');
-      countGenres(data, id)
-    }
   }
-
   document.getElementById('data').innerHTML = output;
-  document.getElementById('info').innerHTML = `${data.length} games available in the games list!`;
+  document.getElementById('info').innerHTML = `${data.length} games available in out games list!`;
 
   const toggleButtons = document.querySelectorAll('.fa-heart');
   toggleButtons.forEach(button => button.addEventListener('click', toggleFavorite));
