@@ -6,22 +6,34 @@ body {
 /** Hero Section */
 
 .hero-bg {
-  width: 100%;
+  width: 100vw;
   height: 70vh;
+  box-shadow: 1px 10px 20px 2px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.hero-bg::before {
+  content: "";
   background: url('../assets/bg-hero.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-
-  box-shadow: 1px 10px 20px 2px rgba(0,0,0,0.3);
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.6;
 }
 
 .hero-content {
+  position: relative;
   height: 70vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 50vw;
+  align-items: center;
+  padding-left: 40vw;
 }
 
 /* Game tiles */
@@ -260,7 +272,17 @@ body {
   color: #272b30;
 }
 
+@media (max-width: 991px) {
+  .hero-bg::before {
+    left: -150px;
+  }
+  .hero-content {
+    padding-left: 0vw;
+  }
+}
+
 @media (max-width: 678px) {
+
   .search-container {
     display: flex;
     flex-direction: column;
