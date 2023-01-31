@@ -31,10 +31,27 @@
     <div class="container">
       <section class="games-selection">
         <div class="container search-container">
-          <label for="search">
-            <input autocomplete="off" id="search" type="text" class="search-input" placeholder="Search...">
-            <i class="fas fa-search"></i>
-          </label>
+          <div>
+            <label for="search">
+              <input autocomplete="off" id="search" type="text" class="search-input" placeholder="Search...">
+              <i class="fas fa-search"></i>
+            </label>
+  
+            <div class="legend-container">
+              <ul class="legend">
+                <li class="legend-item" id="MMORPG">MMORPG: <span>0</span></li>
+                <li class="legend-item" id="Shooter">Shooter: <span>0</span></li>
+                <li class="legend-item" id="Strategy">Strategy: <span>0</span></li>
+                <li class="legend-item" id="Action RPG">Action RPG: <span>0</span></li>
+                <li class="legend-item" id="Battle Royale">Battle Royal: <span>0</span></li>
+                <li class="legend-item" id="Social">Social: <span>0</span></li>
+                <li class="legend-item" id="Fighting">Fighting: <span>0</span></li>
+                <li class="legend-item" id="MOBA">MOBA: <span>0</span></li>
+                <!-- Add more genre items here -->
+              </ul>
+            </div>
+          </div>
+
           <ul class="game-filter-nav ul-defaults-none">
             <li data-filter="all" class="filter-link active">All</li>
             <li data-filter="alphabetical" class="filter-link">Alphabetical</li>

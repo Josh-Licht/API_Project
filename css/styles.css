@@ -43,12 +43,19 @@ body {
 
 .search-container {
   position: relative;
+  justify-content: center;
+}
+
+.search-container > div {
+  display: flex;
+  align-items: center;
 }
 
 .search-container label {
   position: relative;
   display: inline-flex;
   align-items: center;
+  margin-right: 60px;
 }
 
 .search-input {
@@ -75,6 +82,7 @@ body {
   flex-wrap: wrap;
   padding: 2rem 0;
   align-items: center;
+  justify-content: center;
 }
 
 .game-filter-nav .filter-link {
@@ -84,6 +92,7 @@ body {
   letter-spacing: 1.63px;
   font-weight: 700;
   color: #e9ecef;
+  user-select: none;
 }
 
 .game-filter-nav .filter-link:hover {
@@ -94,11 +103,59 @@ body {
   text-decoration: underline;
 }
 
+/** legend */
+
+.legend-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px auto;
+  margin-left: auto;
+  background-color: #32383e;
+  border-radius: 8px;
+  width: 80%;
+}
+
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.legend-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 25px;
+  margin: 10px;
+  background-color: #272b30;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+
+  transition: all 0.4s;
+  pointer-events: none;
+}
+
+.legend-item span {
+  padding-left: 4px;
+}
+
+/* Add styles for more genres here */
+
+
 /** display number */
 .display-options {
-  padding: 12px;
+  padding: 10px;
   margin-left: auto;
   position: relative;
+  margin-top: 7px;
 }
 
 .select-box {
@@ -212,6 +269,7 @@ body {
   background-color: #32383e;
   color: #e9ecef;
   transition: all 0.4s ease-in-out;
+
 }
 
 .game-card:hover{
@@ -281,16 +339,33 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .search-container > div {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .legend-container {
+    margin: 40px auto 0;
+    width: 100%;
+  }
+
+  .search-container label {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
 @media (max-width: 678px) {
 
   .search-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
   }
   
   .game-filter-nav {
-    flex-direction: column;
+    justify-content: center;
     font-size: 20px;
   }
 

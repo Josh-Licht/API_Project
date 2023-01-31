@@ -11,6 +11,7 @@ const options = {
 
 let sortOrder = true; // true for ascending, false for descending
 let displayQty;
+let filter;
 
 const active = 'active';
 const dataFilter = '[data-filter]';
@@ -19,6 +20,10 @@ const dataFilter = '[data-filter]';
 const filterLink = document.querySelectorAll(dataFilter);
 const searchBox = document.querySelector('#search');
 const gameItems = document.querySelectorAll(dataFilter);
+
+//* genre legend
+const legendContainer = document.querySelector('.legend-container');
+const legendItems = legendContainer.querySelectorAll('.legend-item');
 
 //* dropdown variables
 const selected = document.querySelector('.selected');
@@ -51,13 +56,18 @@ const setActive = (elm, selector) => {
 for (const link of filterLink) {
   link.addEventListener('click', function() {
     setActive(link, '.filter-link');
-    const filter = this.dataset.filter;
+    filter = this.dataset.filter;
     if (filter === "all") {
       return displayData(gamesData);
     } else if (filter === "favorite") {
       return displayData(favorite);
     }
     return  displayData(sortData(gamesData, filter));
+  });
+
+  //* double click for ascending/descending
+  link.addEventListener('dblclick', () => {
+    sortOrder = !sortOrder;
   });
 }
 
@@ -81,6 +91,7 @@ searchBox.addEventListener('keyup', (e) => {
 });
 
 //* dropdown selection
+
 selected.addEventListener('click', () => {
   // toggle active on/off
   optionContainer.classList.toggle("active");
@@ -99,7 +110,6 @@ optionList.forEach((option) => {
 
 function sortData(data, sortBy) {
   let sortedData = data.slice();
-  
   if (sortBy === "alphabetical" || sortBy === "release") {
     sortedData.sort((a, b) => {
       const params = sortBy === "alphabetical"
@@ -109,7 +119,6 @@ function sortData(data, sortBy) {
         ? params[0]
         : params[1];
     });
-    sortOrder = !sortOrder;
   } else if (sortBy === "favorite") {
     return displayData(favorite)
   }
@@ -120,7 +129,7 @@ function sortData(data, sortBy) {
 function toggleFavorite(e) {
   const target = e.target;
   const card = target.parentNode.parentNode.parentNode;
-
+  
   let cardData = {
     thumbnail: card.querySelector('img').src,
     title: card.querySelector('.header').innerText,
@@ -131,9 +140,24 @@ function toggleFavorite(e) {
   target.classList.toggle('fas');
   target.classList.toggle('far');
   let index = favorite.findIndex(obj => obj.title === cardData.title);
+  let game = gamesData.findIndex(obj => obj.title === cardData.title);
 
-  index >= 0 ? favorite.splice(index, 1) : favorite.push(cardData);
+  if (game !== -1) {
+    // If the item exists in the gamesData array, remove it and add it to favorites
+    let removed = gamesData.splice(game, 1);
+    favorite.push(...removed);
+  } else {
+    // If the item exists in the favorites array, remove it and add it back to gamesData
+    if (index !== -1) {
+      let removed = favorite.splice(index, 1);
+      gamesData.splice(game, 0, ...removed);
+    }
+  }
 
+  // Call displayData with either gamesData or favorite, depending on the state of the item
+  index === -1 
+  ? [filter === "undefined" ? displayData(gamesData) : displayData(sortData(gamesData, filter))] 
+  : displayData(favorite);
 }
 
 //* create the game cards
@@ -162,15 +186,35 @@ function createCard(data) {
   `;
 }
 
+//* genre Counter
+function countGenres(data, id) {
+  let count = 0;
+  const elm = (id) => {
+    document.getElementById(id).querySelector('span').textContent = count;
+    count++;
+  }
+  for (let i = 0; i < (displayQty ||= 30); i++) {
+    if (data[i].genre === id) { elm(id) }
+    if (data[i].genre === "ARPG") { elm("Action RPG") }
+    if (data[i].genre === "MMORAPG") { elm("MMORPG") }
+  }
+}
+
 //* display the api array via original data/ filtered data
 function displayData(data) {
   let output = '';
   
   for (let i = 0; i < (displayQty ||= 30); i++) {
     output += createCard(data[i]);
+    
+    for (const legendItem of legendItems) {
+      const id = legendItem.getAttribute('id');
+      countGenres(data, id)
+    }
   }
+
   document.getElementById('data').innerHTML = output;
-  document.getElementById('info').innerHTML = `${data.length} games available in out games list!`;
+  document.getElementById('info').innerHTML = `${data.length} games available in the games list!`;
 
   const toggleButtons = document.querySelectorAll('.fa-heart');
   toggleButtons.forEach(button => button.addEventListener('click', toggleFavorite));
