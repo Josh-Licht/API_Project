@@ -164,6 +164,20 @@ function toggleFavorite(e) {
 
 }
 
+//* genre Counter
+function countGenres(data, id) {
+  let count = 0;
+  const elm = (id) => {
+    document.getElementById(id).querySelector('span').textContent = count;
+    count++;
+  }
+  for (let i = 0; i < (displayQty ||= 30); i++) {
+    if (data[i].genre === id) { elm(id) }
+    if (data[i].genre === "ARPG") { elm("Action RPG") }
+    if (data[i].genre === "MMORAPG") { elm("MMORPG") }
+  }
+}
+
 //* create the game cards
 function createCard(data) {
   if (!data) return '';
@@ -196,7 +210,13 @@ function displayData(data) {
   
   for (let i = 0; i < (displayQty ||= 30); i++) {
     output += createCard(data[i]);
+
+    for (const legendItem of legendItems) {
+      const id = legendItem.getAttribute('id');
+      countGenres(gamesData, id)
+    }
   }
+
   document.getElementById('data').innerHTML = output;
   document.getElementById('info').innerHTML = `${data.length} games available in out games list!`;
 
