@@ -3,6 +3,10 @@ body {
   color: #e9ecef;
 }
 
+main {
+  overflow: hidden;
+}
+
 /** Hero Section */
 
 .hero-bg {
