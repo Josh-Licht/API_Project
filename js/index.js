@@ -135,28 +135,28 @@ function toggleFavorite(e) {
     thumbnail: card.querySelector('img').src,
     title: card.querySelector('.header').innerText,
     short_description: card.querySelector('.text-overflow').innerText,
-    genre: card.querySelector('.badge').innerText
+    genre: card.querySelector('.badge').innerText,
+    index: null
   }
 
   target.classList.toggle('fas');
   target.classList.toggle('far');
+  let fav = favorite.findIndex(obj => obj.title === cardData.title);
+  let game = gamesData.findIndex(obj => obj.title === cardData.title);
 
-  let gameIndex = gamesData.findIndex(game => game.title === cardData.title);
-  let game = gamesData[gameIndex];
-  let favoriteIndex = favorite.findIndex(game => game.title === cardData.title);
-
-  console.log(gameIndex, game, favoriteIndex);
-
-  if (favoriteIndex !== -1) {
-    let removed = favorite.splice(favoriteIndex, 1);
-    gamesData.splice(game, 0, ...removed);
+  if (game !== -1) {
+    // If the item exists in the gamesData array, remove it and add it to favorites
+    cardData.index = game;
+    gamesData.splice(game, 1);
+    favorite.push(cardData);
   } else {
-    favorite.push(game);
-    gamesData.splice(gameIndex, 1);
+    // If the item exists in the favorites array, remove it and add it back to gamesData
+    let removed = favorite.splice(fav, 1);
+    gamesData.splice(removed[fav].index, 0, ...removed);
   }
 
   // Call displayData with either gamesData or favorite, depending on the state of the item
-  if (favoriteIndex === -1 ) {
+  if (fav === -1 ) {
     filter === "undefined" ? displayData(gamesData) : displayData(sortData(gamesData, filter))
   } else {
     displayData(favorite)
