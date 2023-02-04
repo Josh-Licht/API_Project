@@ -140,23 +140,23 @@ function toggleFavorite(e) {
 
   target.classList.toggle('fas');
   target.classList.toggle('far');
-  let index = favorite.findIndex(obj => obj.title === cardData.title);
-  let game = gamesData.findIndex(obj => obj.title === cardData.title);
 
-  if (game !== -1) {
-    // If the item exists in the gamesData array, remove it and add it to favorites
-    let removed = gamesData.splice(game, 1);
-    favorite.push(...removed);
+  let gameIndex = gamesData.findIndex(game => game.title === cardData.title);
+  let game = gamesData[gameIndex];
+  let favoriteIndex = favorite.findIndex(game => game.title === cardData.title);
+
+  console.log(gameIndex, game, favoriteIndex);
+
+  if (favoriteIndex !== -1) {
+    let removed = favorite.splice(favoriteIndex, 1);
+    gamesData.splice(game, 0, ...removed);
   } else {
-    // If the item exists in the favorites array, remove it and add it back to gamesData
-    if (index !== -1) {
-      let removed = favorite.splice(index, 1);
-      gamesData.splice(game, 0, ...removed);
-    }
+    favorite.push(game);
+    gamesData.splice(gameIndex, 1);
   }
 
   // Call displayData with either gamesData or favorite, depending on the state of the item
-  if (index === -1 ) {
+  if (favoriteIndex === -1 ) {
     filter === "undefined" ? displayData(gamesData) : displayData(sortData(gamesData, filter))
   } else {
     displayData(favorite)
